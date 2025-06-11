@@ -53,4 +53,12 @@ A modern, mobile-first nicotine intake calculator that helps users track their d
   - Gradient backgrounds
   - Responsive layout
   - Touch-friendly interface
-  - Dark mode optimized 
+  - Dark mode optimized
+ 
+ ---
+
+ <div align="center">
+
+### Nicotine is an addictive substance. The information presented here is for educational purposes only and should not be taken as medical advice. Always consult with your healthcare provider before using nicotine products. Individual responses to nicotine vary significantly.
+
+</div>
