@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found | Nicotine Calculator</title>
+    <meta name="description" content="Page not found on Nicotine Calculator. Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place.">
+    <link rel="apple-touch-icon" sizes="180x180" href="public/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="public/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="public/favicon.svg">
+    <link rel="shortcut icon" href="public/favicon.svg">
+    <meta property="og:title" content="404 - Page Not Found | Nicotine Calculator">
+    <meta property="og:description" content="Page not found on Nicotine Calculator. Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place.">
+    <meta property="og:image" content="https://i.ibb.co/Xf5TDqRR/og-img.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drbaph.is-a.dev/Nicotine/404">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="404 - Page Not Found | Nicotine Calculator">
+    <meta name="twitter:description" content="Page not found on Nicotine Calculator. Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place.">
+    <meta name="twitter:image" content="https://i.ibb.co/Xf5TDqRR/og-img.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b 0%, #581c87 50%, #1e1b4b 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background elements */
+        .bg-element {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            animation: float 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        .bg-element:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+
+        .bg-element:nth-child(2) {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            right: -100px;
+            animation-delay: 2s;
+        }
+
+        .bg-element:nth-child(3) {
+            width: 150px;
+            height: 150px;
+            bottom: -75px;
+            left: 20%;
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg);
+                opacity: 0.03;
+            }
+            50% { 
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.06;
+            }
+        }
+
+        .container {
+            max-width: 448px;
+            width: 100%;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+        }
+
+        .error-code {
+            font-size: 6rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #c084fc, #f472b6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 3s ease-in-out infinite;
+            line-height: 1;
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.02);
+                filter: brightness(1.1);
+            }
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 2.5rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            border-radius: 16px;
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .back-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .back-button:hover::before {
+            left: 100%;
+        }
+
+        .back-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px rgba(168, 85, 247, 0.6);
+        }
+
+        .back-button:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .back-button:focus {
+            outline: none;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4), 0 0 0 3px rgba(168, 85, 247, 0.3);
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.3;
+            animation: floatIcon 8s ease-in-out infinite;
+            pointer-events: none;
+            color: rgba(192, 132, 252, 0.6);
+            text-shadow: 0 0 10px rgba(192, 132, 252, 0.3);
+        }
+
+        .floating-icon:nth-child(1) {
+            top: 15%;
+            left: 8%;
+            animation-delay: 0s;
+        }
+
+        .floating-icon:nth-child(2) {
+            top: 25%;
+            right: 12%;
+            animation-delay: 2s;
+        }
+
+        .floating-icon:nth-child(3) {
+            bottom: 20%;
+            left: 15%;
+            animation-delay: 4s;
+        }
+
+        .floating-icon:nth-child(4) {
+            bottom: 30%;
+            right: 8%;
+            animation-delay: 6s;
+        }
+
+        @keyframes floatIcon {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1);
+                opacity: 0.3;
+            }
+            25% {
+                transform: translateY(-15px) rotate(90deg) scale(1.1);
+                opacity: 0.6;
+            }
+            50% { 
+                transform: translateY(-10px) rotate(180deg) scale(0.9);
+                opacity: 0.4;
+            }
+            75% {
+                transform: translateY(-20px) rotate(270deg) scale(1.1);
+                opacity: 0.6;
+            }
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            .glass-card {
+                padding: 2rem 1.5rem;
+            }
+            
+            .error-code {
+                font-size: 4rem;
+            }
+
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .description {
+                font-size: 1rem;
+                margin-bottom: 2rem;
+            }
+
+            .back-button {
+                padding: 0.875rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .error-code {
+                font-size: 3.5rem;
+            }
+
+            h1 {
+                font-size: 1.5rem;
+            }
+
+            .glass-card {
+                padding: 1.5rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background elements -->
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+    <div class="bg-element"></div>
+
+    <!-- Floating icons -->
+    <div class="floating-icon">⚗️</div>
+    <div class="floating-icon">🧪</div>
+    <div class="floating-icon">💊</div>
+    <div class="floating-icon">🔬</div>
+
+    <div class="container">
+        <div class="glass-card">
+            <div class="error-code">404</div>
+            <h1>Page Not Found</h1>
+            <p class="description">
+                Oops! The page you're looking for seems to have vanished into the digital void. 
+                It might have been moved, deleted, or perhaps it never existed in the first place.
+            </p>
+            <a href="https://drbaph.is-a.dev/Nicotine/" class="back-button">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m12 19-7-7 7-7"></path>
+                    <path d="M19 12H5"></path>
+                </svg>
+                Back to Calculator
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Add some interactive sparkle effects on mouse move
+        let sparkleTimeout;
+        
+        document.addEventListener('mousemove', function(e) {
+            clearTimeout(sparkleTimeout);
+            sparkleTimeout = setTimeout(() => {
+                createSparkle(e.clientX, e.clientY);
+            }, 100);
+        });
+
+        function createSparkle(x, y) {
+            const sparkle = document.createElement('div');
+            sparkle.style.position = 'fixed';
+            sparkle.style.left = x + 'px';
+            sparkle.style.top = y + 'px';
+            sparkle.style.width = '4px';
+            sparkle.style.height = '4px';
+            sparkle.style.background = 'rgba(192, 132, 252, 0.8)';
+            sparkle.style.borderRadius = '50%';
+            sparkle.style.pointerEvents = 'none';
+            sparkle.style.zIndex = '1000';
+            sparkle.style.animation = 'sparkleAnim 1s ease-out forwards';
+            
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+                sparkle.remove();
+            }, 1000);
+        }
+
+        // Add sparkle animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes sparkleAnim {
+                0% {
+                    transform: scale(0) rotate(0deg);
+                    opacity: 1;
+                }
+                50% {
+                    transform: scale(1) rotate(180deg);
+                    opacity: 0.8;
+                }
+                100% {
+                    transform: scale(0) rotate(360deg);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Prevent context menu on right click to maintain the clean aesthetic
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Add subtle keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' || e.key === ' ') {
+                const button = document.querySelector('.back-button');
+                if (document.activeElement === button) {
+                    button.click();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
