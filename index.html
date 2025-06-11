@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nicotine Calculator | Track Your Daily Intake</title>
+    <meta name="description" content="Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place. Get insights into your consumption patterns and health risks.">
+    <link rel="apple-touch-icon" sizes="180x180" href="public/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="public/favicon.svg">
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="public/favicon.svg">
+    <link rel="shortcut icon" href="public/favicon.svg">
+    <meta property="og:title" content="Nicotine Calculator | Track Your Daily Intake">
+    <meta property="og:description" content="Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place. Get insights into your consumption patterns and health risks.">
+    <meta property="og:image" content="https://i.ibb.co/Xf5TDqRR/og-img.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="1200">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://drbaph.is-a.dev/Nicotine/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Nicotine Calculator | Track Your Daily Intake">
+    <meta name="twitter:description" content="Calculate your daily nicotine intake with our modern calculator. Track vape juice, nicotine pouches, and cigarettes in one place. Get insights into your consumption patterns and health risks.">
+    <meta name="twitter:image" content="https://i.ibb.co/Xf5TDqRR/og-img.jpg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1e1b4b 0%, #581c87 50%, #1e1b4b 100%);
+            padding: 1rem;
+            overflow-x: hidden;
+        }
+
+        input {
+            -webkit-user-select: text;
+            -khtml-user-select: text;
+            -moz-user-select: text;
+            -ms-user-select: text;
+            user-select: text;
+        }
+
+        .container {
+            max-width: 448px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+            margin-bottom: 2rem;
+            background: linear-gradient(to right, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.01); opacity: 0.95; }
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 48px;
+            height: 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: rgba(168, 85, 247, 0.5);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .toggle-switch.active::after {
+            transform: translateX(24px);
+        }
+
+        .section {
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .section.disabled {
+            margin-bottom: 1rem;
+        }
+
+        .section-content {
+            max-height: 500px;
+            overflow: hidden;
+            transition: all 0.3s ease-in-out;
+            opacity: 1;
+            padding-top: 0.5rem;
+        }
+
+        .section.disabled .section-content {
+            max-height: 0;
+            opacity: 0;
+            margin-top: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+        }
+
+        .section.disabled .section-header {
+            margin-bottom: 0;
+            opacity: 0.7;
+        }
+
+        .section-header {
+            pointer-events: auto !important;
+            transition: all 0.3s;
+        }
+
+        .input-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 1rem;
+            margin-bottom: 0.75rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        label {
+            display: block;
+            font-size: 0.75rem;
+            color: rgba(196, 181, 253, 1);
+            margin-bottom: 0.25rem;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="number"]:focus {
+            border-color: #c084fc;
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        input[type="number"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .button-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.5rem;
+            margin-top: 0.75rem;
+        }
+
+        .btn-icon {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: scale(1);
+        }
+
+        .btn-icon:active {
+            transform: scale(0.9);
+        }
+
+        .btn-remove {
+            background: rgba(239, 68, 68, 0.2);
+            color: #f87171;
+        }
+
+        .btn-remove:hover {
+            background: rgba(239, 68, 68, 0.3);
+        }
+
+        .btn-add {
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+        }
+
+        .btn-add:hover {
+            background: rgba(168, 85, 247, 0.3);
+        }
+
+        .add-button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 0.75rem;
+        }
+
+        .btn-add-main {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            background: rgba(168, 85, 247, 0.2);
+            color: #c084fc;
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .btn-add-main:hover {
+            background: rgba(168, 85, 247, 0.3);
+            border-color: rgba(168, 85, 247, 0.5);
+        }
+
+        .btn-add-main:active {
+            transform: scale(0.95);
+        }
+
+        .btn-calculate {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 16px;
+            background: linear-gradient(to right, #a855f7, #ec4899);
+            color: white;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+
+        .btn-calculate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.5);
+        }
+
+        .btn-calculate:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-facts {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+            margin-top: 1.5rem;
+        }
+
+        .btn-facts:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-facts:active {
+            transform: scale(0.98);
+        }
+
+        .results {
+            margin-top: 2rem;
+            border-radius: 16px;
+            padding: 1.5rem;
+            border: 1px solid;
+            transition: all 0.3s;
+        }
+
+        .results.low {
+            background: linear-gradient(to right, rgba(34, 197, 94, 0.2), rgba(22, 163, 74, 0.2));
+            border-color: rgba(34, 197, 94, 0.3);
+        }
+
+        .results.medium {
+            background: linear-gradient(to right, rgba(251, 146, 60, 0.2), rgba(249, 115, 22, 0.2));
+            border-color: rgba(251, 146, 60, 0.3);
+        }
+
+        .results.hazardous {
+            background: linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2));
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .results h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .result-label {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .result-value {
+            color: white;
+            font-weight: 600;
+        }
+
+        .result-status {
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 50;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal.show {
+            display: flex;
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border-radius: 24px;
+            padding: 2rem;
+            max-width: 448px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            scrollbar-width: thin;
+            scrollbar-color: rgba(168, 85, 247, 0.5) transparent;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            margin: 1rem 0;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: rgba(168, 85, 247, 0.5);
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: rgba(168, 85, 247, 0.7);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .btn-close {
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-close:active {
+            transform: scale(0.9);
+        }
+
+        .fact-section {
+            margin-bottom: 1rem;
+        }
+
+        .fact-section h4 {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .fact-section p, .fact-section ul {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.5;
+        }
+
+        .fact-section ul {
+            list-style: none;
+            margin-top: 0.25rem;
+        }
+
+        .fact-section ul li {
+            margin-bottom: 0.25rem;
+        }
+
+        .text-purple { color: #c084fc; }
+        .text-blue { color: #60a5fa; }
+        .text-green { color: #4ade80; }
+        .text-orange { color: #fb923c; }
+
+        .fact-section strong {
+            color: rgba(255, 255, 255, 0.95);
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 0.5rem;
+            }
+            
+            .glass-card {
+                padding: 1.5rem;
+            }
+            
+            h1 {
+                font-size: 1.75rem;
+            }
+
+            .modal-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="glass-card">
+            <h1>Nicotine Calculator</h1>
+
+            <!-- Vape Section -->
+            <div class="section" id="vapeSection">
+                <div class="section-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+                        </svg>
+                        Vape Juice
+                    </h2>
+                    <div class="toggle-switch active" id="vapeToggle" onclick="toggleSection('vape')"></div>
+                </div>
+                <div class="section-content">
+                    <div id="vapeInputs"></div>
+                    <div class="add-button-container">
+                        <button class="btn-add-main" onclick="addVapeInput()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add Vape Juice
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pouch Section -->
+            <div class="section" id="pouchSection">
+                <div class="section-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#60a5fa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m7.5 4.27 9 5.15"></path>
+                            <path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"></path>
+                            <path d="m3.3 7 8.7 5 8.7-5"></path>
+                            <path d="M12 22V12"></path>
+                        </svg>
+                        Nicotine Pouches
+                    </h2>
+                    <div class="toggle-switch active" id="pouchToggle" onclick="toggleSection('pouch')"></div>
+                </div>
+                <div class="section-content">
+                    <div id="pouchInputs"></div>
+                    <div class="add-button-container">
+                        <button class="btn-add-main" onclick="addPouchInput()" style="background: rgba(96, 165, 250, 0.2); color: #60a5fa; border-color: rgba(96, 165, 250, 0.3);">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="12" y1="5" x2="12" y2="19"></line>
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                            Add Pouch Type
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cigarette Section -->
+            <div class="section" id="cigaretteSection">
+                <div class="section-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fb923c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M18 12H2v4h16"></path>
+                            <path d="M22 12v4"></path>
+                            <path d="M7 12v4"></path>
+                            <path d="M18 8c0-2.5-2-2.5-2-5"></path>
+                            <path d="M22 8c0-2.5-2-2.5-2-5"></path>
+                        </svg>
+                        Cigarettes
+                    </h2>
+                    <div class="toggle-switch active" id="cigaretteToggle" onclick="toggleSection('cigarette')"></div>
+                </div>
+                <div class="section-content">
+                    <div class="input-card">
+                        <div class="input-grid">
+                            <div>
+                                <label style="color: #fdba74;">Cigarettes per day</label>
+                                <input type="number" id="cigCount" placeholder="0" value="0">
+                            </div>
+                            <div>
+                                <label style="color: #fdba74;">MG per cigarette</label>
+                                <input type="number" id="cigMg" placeholder="1.2" value="1.2" step="0.1">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculate Button -->
+            <button class="btn-calculate" onclick="calculateTotal()">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="2" width="16" height="20" rx="2"></rect>
+                    <line x1="8" x2="16" y1="6" y2="6"></line>
+                    <line x1="8" x2="16" y1="14" y2="14"></line>
+                    <line x1="8" x2="16" y1="18" y2="18"></line>
+                    <line x1="10" x2="10" y1="8" y2="12"></line>
+                    <line x1="14" x2="14" y1="8" y2="12"></line>
+                </svg>
+                Calculate
+            </button>
+
+            <!-- Results -->
+            <div id="results"></div>
+
+            <!-- Facts Button -->
+            <button class="btn-facts" onclick="showFacts()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="16" x2="12" y2="12"></line>
+                    <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                </svg>
+                Nicotine Facts
+            </button>
+        </div>
+    </div>
+
+    <!-- Facts Modal -->
+    <div id="factsModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Nicotine Facts</h3>
+                <button class="btn-close" onclick="hideFacts()">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="fact-section">
+                <h4 class="text-purple">Performance Enhancement</h4>
+                <p>Nicotine can enhance cognitive function, improve focus, and increase alertness. Studies show it may improve reaction time and athletic performance in certain contexts.</p>
+            </div>
+            
+            <div class="fact-section">
+                <h4 class="text-blue">ADHD Management</h4>
+                <p>Research suggests nicotine may help manage ADHD symptoms by improving attention and reducing impulsivity, though medical supervision is recommended.</p>
+            </div>
+
+            <div class="fact-section">
+                <h4 style="color: #34d399;">Neuroprotective Effects</h4>
+                <p>Studies indicate that nicotine may have neuroprotective properties. Research shows:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>• <strong>2-4mg/day</strong>: May improve cognitive function and working memory</li>
+                    <li>• <strong>Low doses (1-2mg)</strong>: Associated with 40% reduced risk of Parkinson's disease</li>
+                    <li>• <strong>Microdoses (0.5-1mg)</strong>: May reduce Alzheimer's risk by up to 30%</li>
+                    <li>• Enhances dopamine release in prefrontal cortex, improving executive function</li>
+                </ul>
+            </div>
+
+            <div class="fact-section">
+                <h4 style="color: #f472b6;">Athletic Performance</h4>
+                <p>Professional athletes have reported benefits from controlled nicotine use:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>• <strong>1-2mg pre-workout</strong>: Increased focus and reaction time</li>
+                    <li>• Enhanced fat oxidation during endurance activities</li>
+                    <li>• Improved hand-eye coordination in precision sports</li>
+                    <li>• 12% average improvement in reaction times</li>
+                </ul>
+            </div>
+            
+            <div class="fact-section">
+                <h4 class="text-green">Natural Sources</h4>
+                <p>Nicotine occurs naturally in nightshade vegetables:</p>
+                <ul>
+                    <li>• Tomatoes: 0.00007-0.00032 mg per gram</li>
+                    <li>• Potatoes: 0.00001-0.00015 mg per gram</li>
+                    <li>• Eggplants: 0.0001 mg per gram</li>
+                    <li>• Bell peppers: 0.00007-0.00009 mg per gram</li>
+                    <li>• Cauliflower: 0.00016 mg per gram</li>
+                    <li>• Green tea: trace amounts</li>
+                </ul>
+            </div>
+
+            <div class="fact-section">
+                <h4 style="color: #60a5fa;">Therapeutic Applications</h4>
+                <p>Medical research has explored nicotine for:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>• <strong>Ulcerative colitis</strong>: 15-25mg patches show remission rates</li>
+                    <li>• <strong>Depression</strong>: Augmentation therapy with 2-4mg daily</li>
+                    <li>• <strong>Schizophrenia</strong>: Improved cognitive symptoms</li>
+                    <li>• <strong>Weight management</strong>: Appetite suppression and metabolic boost</li>
+                </ul>
+            </div>
+            
+            <div class="fact-section">
+                <h4 class="text-orange">Nordic Success Story</h4>
+                <p>In Sweden and Norway, the adoption of smokeless tobacco and nicotine pouches has led to a 75% reduction in smoking rates. These countries now have the lowest cancer rates in Europe, with lung cancer deaths reduced by over 50% compared to other EU nations.</p>
+                <p style="margin-top: 0.75rem;">Sweden's "snus" culture demonstrates harm reduction in practice:</p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>• Only 5% smoking rate (EU average: 23%)</li>
+                    <li>• 45% lower male lung cancer mortality</li>
+                    <li>• 23% of men use snus daily without combustion risks</li>
+                </ul>
+            </div>
+
+            <div class="fact-section" style="text-align: center; margin-top: 1.5rem; padding: 1rem; background: rgba(255, 255, 255, 0.05); border-radius: 12px;">
+                <p style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.7); line-height: 1.6;">
+                    <strong>⚠️ Important Notice:</strong> Nicotine is an addictive substance. The information presented here is for educational purposes only and should not be taken as medical advice. Always consult with your healthcare provider before using nicotine products. Individual responses to nicotine vary significantly.
+                </p>
+            </div>
+            
+            <div class="fact-section" style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <h4 style="color: #f472b6; margin-bottom: 1rem;">Nicotine Molecule Structure</h4>
+                <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                    <a href="https://en.wikipedia.org/wiki/Nicotine" target="_blank" style="display: block;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/7/70/Nicotine.svg" 
+                             alt="Nicotine molecular structure" 
+                             style="max-width: 140px; width: 100%; height: auto; filter: invert(1) brightness(0.9); opacity: 0.9; transition: all 0.3s; cursor: pointer;"
+                             onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'"
+                             onmouseout="this.style.opacity='0.9'; this.style.transform='scale(1)'">
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Nicotine" target="_blank" style="display: block;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Nicotine_molecule_spacefill_from_xtal.png" 
+                             alt="Nicotine spacefill model" 
+                             style="max-width: 100px; width: 100%; height: auto; filter: brightness(0.9); opacity: 0.9; transition: all 0.3s; cursor: pointer;"
+                             onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'"
+                             onmouseout="this.style.opacity='0.9'; this.style.transform='scale(1)'">
+                    </a>
+                    <a href="https://en.wikipedia.org/wiki/Nicotine" target="_blank" style="display: block;">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/08/Nicotine_molecule_ball_from_xtal.png/800px-Nicotine_molecule_ball_from_xtal.png" 
+                             alt="Nicotine ball model" 
+                             style="max-width: 100px; width: 100%; height: auto; filter: brightness(0.9); opacity: 0.9; transition: all 0.3s; cursor: pointer;"
+                             onmouseover="this.style.opacity='1'; this.style.transform='scale(1.05)'"
+                             onmouseout="this.style.opacity='0.9'; this.style.transform='scale(1)'">
+                    </a>
+                </div>
+                <p style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); margin-top: 0.5rem;">Click any molecule to learn more on Wikipedia</p>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(255, 255, 255, 0.1);">
+                <a href="https://github.com/Saganaki22/Nicotine" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.1); border-radius: 12px; color: white; text-decoration: none; transition: all 0.3s; font-size: 0.875rem;"
+                   onmouseover="this.style.background='rgba(255, 255, 255, 0.2)'; this.style.transform='translateY(-2px)'"
+                   onmouseout="this.style.background='rgba(255, 255, 255, 0.1)'; this.style.transform='translateY(0)'">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                    </svg>
+                    View on GitHub
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Data structures
+        let vapeInputs = [{ ml: 5, mg: 50 }];
+        let pouchInputs = [{ pouches: 10, mg: 6 }];
+        let activeSections = {
+            vape: true,
+            pouch: true,
+            cigarette: true
+        };
+
+        // Toggle section function
+        function toggleSection(section) {
+            const activeCount = Object.values(activeSections).filter(v => v).length;
+            
+            // Prevent disabling if only one section is active
+            if (activeSections[section] && activeCount === 1) {
+                alert('At least one section must remain active');
+                return;
+            }
+
+            activeSections[section] = !activeSections[section];
+            
+            // Update UI
+            const sectionElement = document.getElementById(`${section}Section`);
+            const toggleElement = document.getElementById(`${section}Toggle`);
+            
+            if (activeSections[section]) {
+                sectionElement.classList.remove('disabled');
+                toggleElement.classList.add('active');
+            } else {
+                sectionElement.classList.add('disabled');
+                toggleElement.classList.remove('active');
+            }
+        }
+
+        // Render functions
+        function renderVapeInputs() {
+            const container = document.getElementById('vapeInputs');
+            container.innerHTML = vapeInputs.map((input, index) => `
+                <div class="input-card">
+                    <div class="input-grid">
+                        <div>
+                            <label style="color: #d8b4fe;">ML per day</label>
+                            <input type="number" value="${input.ml}" onchange="updateVapeInput(${index}, 'ml', this.value)" placeholder="5">
+                        </div>
+                        <div>
+                            <label style="color: #d8b4fe;">MG/ML strength</label>
+                            <input type="number" value="${input.mg}" onchange="updateVapeInput(${index}, 'mg', this.value)" placeholder="50">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        ${vapeInputs.length > 1 ? `<button class="btn-icon btn-remove" onclick="removeVapeInput(${index})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPouchInputs() {
+            const container = document.getElementById('pouchInputs');
+            container.innerHTML = pouchInputs.map((input, index) => `
+                <div class="input-card">
+                    <div class="input-grid">
+                        <div>
+                            <label style="color: #93c5fd;">Pouches per day</label>
+                            <input type="number" value="${input.pouches}" onchange="updatePouchInput(${index}, 'pouches', this.value)" placeholder="10">
+                        </div>
+                        <div>
+                            <label style="color: #93c5fd;">MG per pouch</label>
+                            <input type="number" value="${input.mg}" onchange="updatePouchInput(${index}, 'mg', this.value)" placeholder="6" step="0.1">
+                        </div>
+                    </div>
+                    <div class="button-group">
+                        ${pouchInputs.length > 1 ? `<button class="btn-icon btn-remove" onclick="removePouchInput(${index})">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                            </svg>
+                        </button>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Update functions
+        function updateVapeInput(index, field, value) {
+            vapeInputs[index][field] = parseFloat(value) || 0;
+        }
+
+        function updatePouchInput(index, field, value) {
+            pouchInputs[index][field] = parseFloat(value) || 0;
+        }
+
+        // Add/Remove functions
+        function addVapeInput() {
+            vapeInputs.push({ ml: 5, mg: 50 });
+            renderVapeInputs();
+        }
+
+        function removeVapeInput(index) {
+            if (vapeInputs.length > 1) {
+                vapeInputs.splice(index, 1);
+                renderVapeInputs();
+            }
+        }
+
+        function addPouchInput() {
+            pouchInputs.push({ pouches: 10, mg: 6 });
+            renderPouchInputs();
+        }
+
+        function removePouchInput(index) {
+            if (pouchInputs.length > 1) {
+                pouchInputs.splice(index, 1);
+                renderPouchInputs();
+            }
+        }
+
+        // Calculate function
+        function calculateTotal() {
+            let totalMg = 0;
+
+            // Calculate vape nicotine if active
+            if (activeSections.vape) {
+                vapeInputs.forEach(input => {
+                    totalMg += input.ml * input.mg; // Fixed: removed /100
+                });
+            }
+
+            // Calculate pouch nicotine if active
+            if (activeSections.pouch) {
+                pouchInputs.forEach(input => {
+                    totalMg += input.pouches * input.mg;
+                });
+            }
+
+            // Calculate cigarette nicotine if active
+            if (activeSections.cigarette) {
+                const cigCount = parseFloat(document.getElementById('cigCount').value) || 0;
+                const cigMg = parseFloat(document.getElementById('cigMg').value) || 0;
+                totalMg += cigCount * cigMg;
+            }
+
+            const hourly = totalMg / 24;
+            const weekly = totalMg * 7;
+            const monthly = totalMg * 30;
+            const yearly = totalMg * 365;
+
+            let status = 'low';
+            let statusClass = 'low';
+            
+            if (totalMg > 60) {
+                status = 'hazardous';
+                statusClass = 'hazardous';
+            } else if (totalMg > 30) {
+                status = 'medium';
+                statusClass = 'medium';
+            }
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = `
+                <div class="results ${statusClass}">
+                    <h3>Results</h3>
+                    <div class="result-item">
+                        <span class="result-label">Daily Total:</span>
+                        <span class="result-value">${totalMg.toFixed(2)} mg</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Hourly Average:</span>
+                        <span class="result-value">${hourly.toFixed(2)} mg</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Weekly Total:</span>
+                        <span class="result-value">${weekly.toFixed(2)} mg</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Monthly Total:</span>
+                        <span class="result-value">${monthly.toFixed(2)} mg</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Yearly Total:</span>
+                        <span class="result-value">${yearly.toFixed(2)} mg</span>
+                    </div>
+                    <div class="result-status">
+                        Risk Status: ${status}
+                    </div>
+                </div>
+            `;
+        }
+
+        // Modal functions
+        function showFacts() {
+            document.getElementById('factsModal').classList.add('show');
+        }
+
+        function hideFacts() {
+            document.getElementById('factsModal').classList.remove('show');
+        }
+
+        // Make functions globally accessible
+        window.toggleSection = toggleSection;
+        window.updateVapeInput = updateVapeInput;
+        window.updatePouchInput = updatePouchInput;
+        window.addVapeInput = addVapeInput;
+        window.removeVapeInput = removeVapeInput;
+        window.addPouchInput = addPouchInput;
+        window.removePouchInput = removePouchInput;
+        window.calculateTotal = calculateTotal;
+        window.showFacts = showFacts;
+        window.hideFacts = hideFacts;
+
+        // Initialize when DOM is ready
+        document.addEventListener('DOMContentLoaded', function() {
+            renderVapeInputs();
+            renderPouchInputs();
+        });
+    </script>
+</body>
+</html>
